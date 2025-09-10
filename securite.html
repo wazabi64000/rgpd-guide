@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guide RGPD — Sécurité des données</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <h1>Guide RGPD Complet</h1>
+      <p class="tag">Sécuriser les données personnelles collectées</p>
+      <nav>
+        <ul class="nav">
+          <li><a href="index.html">Introduction</a></li>
+          <li><a href="collecte.html">Collecte des données</a></li>
+          <li><a href="consentement.html">Consentement</a></li>
+          <li><a href="securite.html" class="active">Sécurité</a></li>
+          <li><a href="droits-utilisateur.html">Droits utilisateur</a></li>
+          <li><a href="exercices.html">Exercices</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="container grid">
+    <article>
+      <h2>Sécurisation des données personnelles</h2>
+      <p>
+        Protéger les données des utilisateurs est une obligation RGPD. Il faut s’assurer qu’elles ne soient ni perdues, ni accessibles à des tiers non autorisés.
+      </p>
+
+      <h3>Bonnes pratiques</h3>
+      <ul>
+        <li>Utiliser le protocole HTTPS pour toutes les pages du site.</li>
+        <li>Valider et filtrer toutes les entrées utilisateurs côté serveur et côté client.</li>
+        <li>Stocker les mots de passe en **hachage sécurisé** (ex : bcrypt).</li>
+        <li>Limiter l’accès aux données selon le rôle de l’utilisateur.</li>
+        <li>Effectuer des sauvegardes régulières et sécurisées.</li>
+      </ul>
+
+      <h3>Exemple de formulaire sécurisé</h3>
+      <form id="secureForm">
+        <label for="username">Nom d’utilisateur :</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required minlength="8">
+
+        <div class="consent">
+          <input type="checkbox" id="consentSecure" required>
+          <label for="consentSecure">J’accepte le stockage sécurisé de mes données.</label>
+        </div>
+
+        <button type="submit" class="btn">S’inscrire</button>
+      </form>
+
+      <p id="secureMessage"></p>
+
+      <p class="call">
+        <a class="btn" href="droits-utilisateur.html">Étape suivante : Droits utilisateur →</a>
+      </p>
+    </article>
+
+    <aside>
+      <h4>Résumé sécurité</h4>
+      <ul>
+        <li>HTTPS obligatoire pour toutes les pages.</li>
+        <li>Validation des champs pour éviter les injections.</li>
+        <li>Hachage des mots de passe et chiffrement des données sensibles.</li>
+        <li>Accès aux données limité selon les rôles.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 — Guide RGPD. Pédagogique et pratique</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script src="assets/js/script.js"></script>
+  <script>
+    const secureForm = document.getElementById('secureForm');
+    const secureMessage = document.getElementById('secureMessage');
+
+    secureForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const consentChecked = document.getElementById('consentSecure').checked;
+
+      if(!consentChecked) {
+        secureMessage.textContent = "Vous devez accepter le stockage sécurisé.";
+        secureMessage.style.color = "red";
+        return;
+      }
+
+      // Exemple pédagogique : stocker en localStorage (en pratique, côté serveur)
+      const userSecureData = { username, password };
+      localStorage.setItem('secureUser', JSON.stringify(userSecureData));
+
+      secureMessage.textContent = "Inscription sécurisée réussie ! Vos données sont protégées.";
+      secureMessage.style.color = "green";
+
+      secureForm.reset();
+    });
+  </script>
+</body>
+</html>

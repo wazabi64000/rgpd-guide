@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guide RGPD — Consentement</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <h1>Guide RGPD Complet</h1>
+      <p class="tag">Consentement et conditions pour la collecte des données</p>
+      <nav>
+        <ul class="nav">
+          <li><a href="index.html">Introduction</a></li>
+          <li><a href="collecte.html">Collecte des données</a></li>
+          <li><a href="consentement.html" class="active">Consentement</a></li>
+          <li><a href="securite.html">Sécurité</a></li>
+          <li><a href="droits-utilisateur.html">Droits utilisateur</a></li>
+          <li><a href="exercices.html">Exercices</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="container grid">
+    <article>
+      <h2>Consentement utilisateur</h2>
+      <p>
+        Avant de collecter et traiter les données, il est obligatoire d’obtenir un consentement explicite de l’utilisateur.
+        Ce consentement doit être libre, clair et informé.
+      </p>
+
+      <h3>Exemple de popup de consentement</h3>
+      <p>Lorsqu’un utilisateur arrive sur le site, une fenêtre s’affiche pour accepter ou refuser le traitement des données :</p>
+
+      <div id="consentModal" class="modal">
+        <div class="modal-content">
+          <h4>Consentement RGPD</h4>
+          <p>Nous utilisons vos données uniquement pour améliorer votre expérience. Acceptez-vous leur traitement ?</p>
+          <button id="acceptBtn" class="btn">Accepter</button>
+          <button id="declineBtn" class="btn">Refuser</button>
+        </div>
+      </div>
+
+      <p id="consentMessage"></p>
+
+      <p class="call">
+        <a class="btn" href="securite.html">Étape suivante : Sécurité des données →</a>
+      </p>
+    </article>
+
+    <aside>
+      <h4>Points clés</h4>
+      <ul>
+        <li>Le consentement doit être clair et informé.</li>
+        <li>L’utilisateur peut le retirer à tout moment.</li>
+        <li>Stocker le consentement pour prouver la conformité RGPD.</li>
+        <li>Utiliser modales ou popups pour la visibilité immédiate.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 — Guide RGPD. Pédagogique et pratique</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Sélection des éléments
+    const modal = document.getElementById('consentModal');
+    const acceptBtn = document.getElementById('acceptBtn');
+    const declineBtn = document.getElementById('declineBtn');
+    const message = document.getElementById('consentMessage');
+
+    // Vérifie si le consentement existe déjà
+    if(!localStorage.getItem('rgpdConsent')) {
+      modal.style.display = 'block';
+    }
+
+    // Accepter le consentement
+    acceptBtn.addEventListener('click', function() {
+      localStorage.setItem('rgpdConsent', true);
+      modal.style.display = 'none';
+      message.textContent = "Merci ! Vous avez accepté le traitement de vos données.";
+      message.style.color = "green";
+    });
+
+    // Refuser le consentement
+    declineBtn.addEventListener('click', function() {
+      localStorage.setItem('rgpdConsent', false);
+      modal.style.display = 'none';
+      message.textContent = "Vous avez refusé le traitement de vos données.";
+      message.style.color = "red";
+    });
+  </script>
+
+  <style>
+    /* Styles spécifiques au modal */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1000; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%;
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.5); 
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto; 
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content h4 {
+      margin-top: 0;
+    }
+
+    .modal-content .btn {
+      margin: 10px 5px 0 5px;
+      width: 120px;
+    }
+  </style>
+</body>
+</html>

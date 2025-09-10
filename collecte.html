@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guide RGPD — Collecte des données</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <h1>Guide RGPD Complet</h1>
+      <p class="tag">Comment collecter les données utilisateur de manière conforme</p>
+      <nav>
+        <ul class="nav">
+          <li><a href="index.html">Introduction</a></li>
+          <li><a href="collecte.html" class="active">Collecte des données</a></li>
+          <li><a href="consentement.html">Consentement</a></li>
+          <li><a href="securite.html">Sécurité</a></li>
+          <li><a href="droits-utilisateur.html">Droits utilisateur</a></li>
+          <li><a href="exercices.html">Exercices</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="container grid">
+    <article>
+      <h2>Collecte des données utilisateur</h2>
+      <p>
+        La collecte de données personnelles doit être **limitée, transparente et justifiée**.
+        Vous devez informer l’utilisateur des informations que vous collectez et pourquoi.
+      </p>
+
+      <h3>Exemple de données collectées</h3>
+      <ul>
+        <li>Nom et prénom</li>
+        <li>Adresse email</li>
+        <li>Date de naissance</li>
+        <li>Préférences et consentements</li>
+      </ul>
+
+      <h3>Formulaire HTML de collecte conforme RGPD</h3>
+      <form id="rgpdForm">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="dateNaissance">Date de naissance :</label>
+        <input type="date" id="dateNaissance" name="dateNaissance">
+
+        <div class="consent">
+          <input type="checkbox" id="consent" name="consent">
+          <label for="consent">J’accepte que mes données soient collectées conformément au RGPD.</label>
+        </div>
+
+        <button type="submit" class="btn">Envoyer</button>
+      </form>
+
+      <p id="message"></p>
+
+      <p class="call">
+        <a class="btn" href="consentement.html">Étape suivante : Consentement et conditions →</a>
+      </p>
+    </article>
+
+    <aside>
+      <h4>Points clés</h4>
+      <ul>
+        <li>Ne collectez que les données nécessaires.</li>
+        <li>Informez toujours l’utilisateur de l’usage de ses données.</li>
+        <li>Le consentement explicite est obligatoire.</li>
+        <li>Préparez le stockage sécurisé des données collectées.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 — Guide RGPD. Pédagogique et pratique</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Validation du formulaire et stockage du consentement
+    const form = document.getElementById('rgpdForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nom = document.getElementById('nom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const consentChecked = document.getElementById('consent').checked;
+
+      if(!consentChecked) {
+        message.textContent = "Vous devez accepter la collecte de vos données.";
+        message.style.color = "red";
+        return;
+      }
+
+      // Stockage en localStorage (exemple pédagogique)
+      const userData = { nom, email, dateNaissance: document.getElementById('dateNaissance').value };
+      localStorage.setItem('rgpdUser', JSON.stringify(userData));
+      localStorage.setItem('rgpdConsent', true);
+
+      message.textContent = "Merci ! Vos données ont été enregistrées de manière conforme.";
+      message.style.color = "green";
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>

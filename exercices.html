@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guide RGPD — Exercices pratiques</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <h1>Guide RGPD Complet</h1>
+      <p class="tag">Mettre en pratique le RGPD avec des exercices</p>
+      <nav>
+        <ul class="nav">
+          <li><a href="index.html">Introduction</a></li>
+          <li><a href="collecte.html">Collecte des données</a></li>
+          <li><a href="consentement.html">Consentement</a></li>
+          <li><a href="securite.html">Sécurité</a></li>
+          <li><a href="droits-utilisateur.html">Droits utilisateur</a></li>
+          <li><a href="exercices.html" class="active">Exercices</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="container grid">
+    <article>
+      <h2>Exercices pratiques RGPD</h2>
+      <p>
+        Ces exercices vous permettent de mettre en pratique toutes les notions vues : collecte, consentement, sécurisation et droits utilisateur.
+      </p>
+
+      <h3>Exercice 1 : Créer un formulaire conforme RGPD</h3>
+      <p>Créer un formulaire demandant nom, email et consentement :</p>
+      <pre><code>&lt;form id="exerciseForm"&gt;
+  &lt;label for="name"&gt;Nom:&lt;/label&gt;
+  &lt;input type="text" id="name" required&gt;
+
+  &lt;label for="email"&gt;Email:&lt;/label&gt;
+  &lt;input type="email" id="email" required&gt;
+
+  &lt;input type="checkbox" id="consent" required&gt;
+  &lt;label for="consent"&gt;J'accepte le RGPD&lt;/label&gt;
+
+  &lt;button type="submit"&gt;Envoyer&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+      <h4>Correction JS :</h4>
+      <pre><code>const form = document.getElementById('exerciseForm');
+form.addEventListener('submit', e =&gt; {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const consent = document.getElementById('consent').checked;
+
+  if(!consent) {
+    alert("Consentement obligatoire !");
+    return;
+  }
+
+  localStorage.setItem('exerciseUser', JSON.stringify({ name, email }));
+  alert("Formulaire soumis avec succès !");
+});</code></pre>
+
+      <h3>Exercice 2 : Créer un popup de consentement</h3>
+      <p>Afficher un modal RGPD au chargement de la page :</p>
+      <pre><code>&lt;div id="modal"&gt;
+  &lt;p&gt;Acceptez-vous le traitement de vos données ?&lt;/p&gt;
+  &lt;button id="accept"&gt;Accepter&lt;/button&gt;
+  &lt;button id="decline"&gt;Refuser&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+      <h4>Correction JS :</h4>
+      <pre><code>const modal = document.getElementById('modal');
+const accept = document.getElementById('accept');
+const decline = document.getElementById('decline');
+
+if(!localStorage.getItem('rgpdConsent')) {
+  modal.style.display = 'block';
+}
+
+accept.addEventListener('click', () =&gt; {
+  localStorage.setItem('rgpdConsent', true);
+  modal.style.display = 'none';
+});
+
+decline.addEventListener('click', () =&gt; {
+  localStorage.setItem('rgpdConsent', false);
+  modal.style.display = 'none';
+});</code></pre>
+
+      <h3>Exercice 3 : Droits utilisateur</h3>
+      <p>Afficher, modifier et supprimer les données stockées :</p>
+      <pre><code>const userData = JSON.parse(localStorage.getItem('exerciseUser'));
+console.log(userData);
+
+// Modifier
+userData.email = "nouvel@email.com";
+localStorage.setItem('exerciseUser', JSON.stringify(userData));
+
+// Supprimer
+localStorage.removeItem('exerciseUser');</code></pre>
+
+      <h3>Exercice 4 : Sécurisation minimale</h3>
+      <ul>
+        <li>Valider tous les champs côté client.</li>
+        <li>Stocker les données sensibles uniquement côté serveur (ici pédagogique avec localStorage).</li>
+        <li>Utiliser HTTPS pour la page réelle.</li>
+      </ul>
+
+      <p class="call">
+        <a class="btn" href="index.html">Retour à l’introduction →</a>
+      </p>
+    </article>
+
+    <aside>
+      <h4>Résumé pratique</h4>
+      <ul>
+        <li>Formulaires conformes RGPD avec consentement obligatoire.</li>
+        <li>Modal popup pour demander le consentement.</li>
+        <li>Simulation des droits utilisateur : accès, modification, suppression.</li>
+        <li>Validation et sécurisation minimale côté client.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 — Guide RGPD. Pédagogique et pratique</p>
+    </div>
+  </footer>
+</body>
+</html>

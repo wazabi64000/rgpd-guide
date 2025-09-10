@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guide RGPD — Droits utilisateur</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <h1>Guide RGPD Complet</h1>
+      <p class="tag">Exercer les droits RGPD des utilisateurs</p>
+      <nav>
+        <ul class="nav">
+          <li><a href="index.html">Introduction</a></li>
+          <li><a href="collecte.html">Collecte des données</a></li>
+          <li><a href="consentement.html">Consentement</a></li>
+          <li><a href="securite.html">Sécurité</a></li>
+          <li><a href="droits-utilisateur.html" class="active">Droits utilisateur</a></li>
+          <li><a href="exercices.html">Exercices</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="container grid">
+    <article>
+      <h2>Droits des utilisateurs</h2>
+      <p>
+        Le RGPD garantit à chaque utilisateur plusieurs droits sur ses données personnelles :
+      </p>
+      <ul>
+        <li>Droit d’accès : connaître quelles données sont stockées.</li>
+        <li>Droit de modification : corriger les informations erronées.</li>
+        <li>Droit à l’oubli : demander la suppression des données.</li>
+        <li>Droit à la portabilité : récupérer ses données dans un format réutilisable.</li>
+      </ul>
+
+      <h3>Formulaires pédagogiques</h3>
+
+      <h4>1. Accéder à ses données</h4>
+      <button id="accessDataBtn" class="btn">Afficher mes données</button>
+      <pre id="userDataDisplay"></pre>
+
+      <h4>2. Modifier ses données</h4>
+      <form id="modifyForm">
+        <label for="newEmail">Nouvel email :</label>
+        <input type="email" id="newEmail" name="newEmail" required>
+
+        <button type="submit" class="btn">Modifier</button>
+      </form>
+      <p id="modifyMessage"></p>
+
+      <h4>3. Supprimer ses données</h4>
+      <button id="deleteDataBtn" class="btn">Supprimer mes données</button>
+      <p id="deleteMessage"></p>
+
+      <p class="call">
+        <a class="btn" href="exercices.html">Étape suivante : Exercices pratiques →</a>
+      </p>
+    </article>
+
+    <aside>
+      <h4>Résumé droits utilisateur</h4>
+      <ul>
+        <li>L’utilisateur doit pouvoir accéder, modifier ou supprimer ses données.</li>
+        <li>Le consentement peut être retiré à tout moment.</li>
+        <li>Les actions doivent être simples et transparentes.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 — Guide RGPD. Pédagogique et pratique</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Afficher les données utilisateur stockées
+    const accessBtn = document.getElementById('accessDataBtn');
+    const userDataDisplay = document.getElementById('userDataDisplay');
+    const modifyForm = document.getElementById('modifyForm');
+    const modifyMessage = document.getElementById('modifyMessage');
+    const deleteBtn = document.getElementById('deleteDataBtn');
+    const deleteMessage = document.getElementById('deleteMessage');
+
+    accessBtn.addEventListener('click', function() {
+      const userData = localStorage.getItem('rgpdUser');
+      if(userData) {
+        userDataDisplay.textContent = userData;
+      } else {
+        userDataDisplay.textContent = "Aucune donnée trouvée.";
+      }
+    });
+
+    // Modifier l'email
+    modifyForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newEmail = document.getElementById('newEmail').value.trim();
+      const userData = JSON.parse(localStorage.getItem('rgpdUser'));
+      if(userData) {
+        userData.email = newEmail;
+        localStorage.setItem('rgpdUser', JSON.stringify(userData));
+        modifyMessage.textContent = "Email modifié avec succès !";
+        modifyMessage.style.color = "green";
+        modifyForm.reset();
+      } else {
+        modifyMessage.textContent = "Aucune donnée trouvée à modifier.";
+        modifyMessage.style.color = "red";
+      }
+    });
+
+    // Supprimer les données
+    deleteBtn.addEventListener('click', function() {
+      localStorage.removeItem('rgpdUser');
+      localStorage.setItem('rgpdConsent', false);
+      deleteMessage.textContent = "Vos données ont été supprimées.";
+      deleteMessage.style.color = "green";
+      userDataDisplay.textContent = "";
+    });
+  </script>
+</body>
+</html>
